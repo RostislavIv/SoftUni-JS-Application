@@ -1,4 +1,4 @@
-import { render } from "../../node_modules/lit-html/lit-html.js";
+import { render } from "../node_modules/lit-html/lit-html.js";
 import { templateBody } from "./templates.js";
 import { getData } from "./requests.js";
 
