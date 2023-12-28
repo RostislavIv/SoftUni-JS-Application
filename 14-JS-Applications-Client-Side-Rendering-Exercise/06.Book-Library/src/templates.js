@@ -44,14 +44,14 @@ const templateAddBook = html` <h3>Add book</h3>
   <input type="text" name="author" placeholder="Author..." />
   <input type="submit" value="Submit" />`;
 
-const templateEditBook = (b) => html` <input
+const templateEditBook = (id, { title, author }) => html` <input
     type="hidden"
     name="id"
-    .value=${b._id}
+    .value=${id}
   />
   <h3>Edit book</h3>
   <label>TITLE</label>
-  <input type="text" name="title" placeholder="Title..." .value=${b.title} />
+  <input type="text" name="title" placeholder="Title..." .value=${title} />
   <label>AUTHOR</label>
-  <input type="text" name="author" placeholder="Author..." .value=${b.author} />
+  <input type="text" name="author" placeholder="Author..." .value=${author} />
   <input type="submit" value="Save" />`;
