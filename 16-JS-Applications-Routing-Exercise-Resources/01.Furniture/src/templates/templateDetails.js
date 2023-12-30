@@ -1,6 +1,6 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 
-export const templateDetails = (f, isFurnetureOwner) => html` <div
+export const templateDetails = (f, isFurnetureOwner, onDelete) => html` <div
     class="row space-top"
   >
     <div class="col-md-12">
@@ -22,11 +22,13 @@ export const templateDetails = (f, isFurnetureOwner) => html` <div
       <p>Description: <span>${f.description}</span></p>
       <p>Price: <span>${f.price}</span></p>
       <p>Material: <span>${f.material}</span></p>
-      ${isFurnetureOwner ? templateButtons(f._id) : null}
+      ${isFurnetureOwner ? templateButtons(f._id, onDelete) : null}
     </div>
   </div>`;
 
-const templateButtons = (id) => html` <div>
+const templateButtons = (id, onDelete) => html` <div>
   <a href="/edit/${id}" class="btn btn-info">Edit</a>
-  <a href="javascript:void(0)" class="btn btn-red" id=${id}>Delete</a>
+  <a href="javascript:void(0)" class="btn btn-red" id=${id} @click=${onDelete}
+    >Delete</a
+  >
 </div>`;

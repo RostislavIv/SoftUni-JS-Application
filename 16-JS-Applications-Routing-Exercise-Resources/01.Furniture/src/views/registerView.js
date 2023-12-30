@@ -8,12 +8,6 @@ export async function registerView() {
   const container = document.querySelector(".container");
   const template = templateRegister(onSubmit);
   render(template, container);
-
-  const user = await registerRequest("1peter@abv.bg", "123456");
-  if (user) {
-    updateNav();
-    page.redirect("/");
-  }
 }
 
 async function onSubmit(e) {

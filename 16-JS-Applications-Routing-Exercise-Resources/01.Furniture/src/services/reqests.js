@@ -1,5 +1,6 @@
 import {
   getAccessToken,
+  getUser,
   isUser,
   removeUser,
   setUser,
@@ -9,6 +10,13 @@ const url = "http://localhost:3030";
 
 export async function getCatalogRequest() {
   const urlCatalog = `${url}/data/catalog`;
+  const catalog = await innerFetch(urlCatalog, {});
+  return catalog;
+}
+
+export async function getCatalogByOwnerRequest() {
+  const user = getUser();
+  const urlCatalog = `${url}/data/catalog?where=_ownerId%3D%22${user._id}%22`;
   const catalog = await innerFetch(urlCatalog, {});
   return catalog;
 }
@@ -35,6 +43,37 @@ export async function createItemRequest(item) {
   };
   const resultItem = await innerFetch(urlCatalog, settings);
   return resultItem;
+}
+
+export async function updateItemRequest(id, item) {
+  const urlCatalog = `${url}/data/catalog/${id}`;
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    return;
+  }
+  const settings = {
+    method: "PUT",
+    headers: {
+      "X-Authorization": accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(item),
+  };
+  const resultItem = await innerFetch(urlCatalog, settings);
+  return resultItem;
+}
+
+export async function deleteItemRequest(id) {
+  const urlDelete = `${url}/data/catalog/${id}`;
+  const accessToken = getAccessToken();
+  const settings = {
+    method: "DELETE",
+    headers: {
+      "X-Authorization": accessToken,
+    },
+  };
+  const resultItem = await innerFetch(urlDelete, settings);
+  return resultItem ? true : false;
 }
 
 export async function loginRequest(email, password) {
