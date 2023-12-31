@@ -1,13 +1,13 @@
 import { registerRequest } from "../services/reqests.js";
-import { updateNav } from "../utils.js";
+//import { updateNav } from "../utils.js";
 import page from "../../node_modules/page/page.mjs";
 import { render } from "../../node_modules/lit-html/lit-html.js";
 import { templateRegister } from "../templates/templateRegister.js";
 
-export async function registerView() {
-  const container = document.querySelector(".container");
+export async function registerView(ctx) {
+  //const container = document.querySelector(".container");
   const template = templateRegister(onSubmit);
-  render(template, container);
+  ctx.render(template);
 }
 
 async function onSubmit(e) {

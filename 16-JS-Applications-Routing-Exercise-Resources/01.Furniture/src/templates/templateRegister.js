@@ -1,14 +1,15 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 
 export const templateRegister = (
-  onSubmit
+  onSubmit,
+  ctx
 ) => html`        <div class="row space-top">
             <div class="col-md-12">
                 <h1>Register New User</h1>
                 <p>Please fill all fields.</p>
             </div>
         </div>
-        <form @submit=${onSubmit}>
+        <form @submit=${() => onSubmit(ctx)}>
             <div class="row space-top">
                 <div class="col-md-4">
                     <div class="form-group">

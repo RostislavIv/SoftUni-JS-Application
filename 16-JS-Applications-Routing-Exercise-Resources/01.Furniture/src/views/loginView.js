@@ -1,13 +1,13 @@
 import { loginRequest } from "../services/reqests.js";
 import { updateNav } from "../utils.js";
 import page from "../../node_modules/page/page.mjs";
-import { render } from "../../node_modules/lit-html/lit-html.js";
+//import { render } from "../../node_modules/lit-html/lit-html.js";
 import { templateLogin } from "../templates/templateLogin.js";
 
-export async function loginView() {
-  const container = document.querySelector(".container");
+export async function loginView(ctx) {
+  //const container = document.querySelector(".container");
   const template = templateLogin(onSubmit);
-  render(template, container);
+  ctx.render(template);
 }
 
 async function onSubmit(e) {

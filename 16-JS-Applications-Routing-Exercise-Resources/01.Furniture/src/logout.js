@@ -1,4 +1,4 @@
-import { loginRequest, logoutRequest } from "./services/reqests.js";
+import { logoutRequest } from "./services/reqests.js";
 import { updateNav } from "./utils.js";
 import page from "../node_modules/page/page.mjs";
 
