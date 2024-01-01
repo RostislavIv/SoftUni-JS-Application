@@ -1,15 +1,22 @@
-import {
-  getAccessToken,
-  getUser,
-  isUser,
-  removeUser,
-  setUser,
-} from "./authorization.js";
+import { getAccessToken } from "./authorization.js";
+import { innerFetch } from "./innerFetch.js";
 
 const urlBase = "http://localhost:3030";
 
 export async function getAllTeams() {
   const url = `${urlBase}/data/teams`;
+  const teams = await innerFetch(url, {});
+  return teams;
+}
+
+export async function getTeam(id) {
+  const url = `${urlBase}/data/teams/${id}`;
+  const team = await innerFetch(url, {});
+  return team;
+}
+
+export async function getTeamsByMember(memberId) {
+  const url = `${urlBase}/data/members?where=_ownerId%3D%22${memberId}%22%20AND%20status%3D%22member%22&load=team%3DteamId%3Ateams`;
   const teams = await innerFetch(url, {});
   return teams;
 }
@@ -20,20 +27,77 @@ export async function getAllMembers() {
   return teams;
 }
 
-async function innerFetch(url, settings) {
-  try {
-    const responce = await fetch(url, settings);
-    if (responce.status == 204) {
-      return true;
-    }
-    if (!responce.ok) {
-      throw new Error(responce.statusText);
-    }
-    const result = await responce.json();
-    return result;
-  } catch (err) {
-    console.log(err.message);
+export async function getMembers(teamId) {
+  const url = `${urlBase}/data/members?where=teamId%3D%22${teamId}%22&load=user%3D_ownerId%3Ausers`;
+  const members = await innerFetch(url, {});
+  return members;
+}
+
+export async function removeMember(memberId) {
+  const url = `${urlBase}/data/members/${memberId}`;
+  const accessToken = getAccessToken();
+  const settings = {
+    method: "DELETE",
+    headers: {
+      "X-Authorization": accessToken,
+    },
+  };
+  const resultItem = await innerFetch(url, settings);
+  return resultItem ? true : false;
+}
+
+export async function joinMemeberToTeam(teamId) {
+  const url = `${urlBase}/data/members`;
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    return;
   }
+  const settings = {
+    method: "POST",
+    headers: {
+      "X-Authorization": accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(teamId),
+  };
+  const resultItem = await innerFetch(url, settings);
+  return resultItem;
+}
+
+export async function approveMemeberToTeam(memberId) {
+  const url = `${urlBase}/data/members/${memberId}`;
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    return;
+  }
+  const settings = {
+    method: "PUT",
+    headers: {
+      "X-Authorization": accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ status: "member" }),
+  };
+  const resultItem = await innerFetch(url, settings);
+  return resultItem;
+}
+
+export async function updateTeam(id, team) {
+  const url = `${urlBase}/data/teams/${id}`;
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    return;
+  }
+  const settings = {
+    method: "PUT",
+    headers: {
+      "X-Authorization": accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(team),
+  };
+  const resultItem = await innerFetch(url, settings);
+  return resultItem;
 }
 
 // export async function getCatalogRequest() {
@@ -102,49 +166,4 @@ async function innerFetch(url, settings) {
 //   };
 //   const resultItem = await innerFetch(urlDelete, settings);
 //   return resultItem ? true : false;
-// }
-
-// export async function loginRequest(email, password) {
-//   const urlLogin = `${url}/users/login`;
-//   const settings = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ email, password }),
-//   };
-//   const user = await innerFetch(urlLogin, settings);
-//   if (user) {
-//     setUser(user);
-//   }
-//   return user;
-// }
-
-// export async function registerRequest(email, password) {
-//   const urlLogin = `${url}/users/register`;
-//   const settings = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ email, password }),
-//   };
-//   const user = await innerFetch(urlLogin, settings);
-//   if (user) {
-//     setUser(user);
-//   }
-//   return user;
-// }
-
-// export async function logoutRequest() {
-//   const accessToken = getAccessToken();
-//   if (!accessToken) {
-//     return;
-//   }
-//   const urlLogout = `${url}/users/logout`;
-//   const settings = {
-//     method: "GET",
-//     headers: { "X-Authorization": accessToken },
-//   };
-//   const isLogout = await innerFetch(urlLogout, settings);
-//   if (isLogout) {
-//     removeUser();
-//   }
-//   return isLogout;
 // }

@@ -6,9 +6,11 @@ export function showNav(ctx, next) {
 }
 
 const template = (user) => html`<a href="/browse" class="action">Browse Teams</a
-  >${user ? temlUserNav : templGuestNav}`;
+  >${user ? temlUserNav(user._id) : templGuestNav}`;
 
-const temlUserNav = html`<a href="/myTeam" class="action">My Teams</a>
+const temlUserNav = (userId) => html`<a href="/myTeam/${userId}" class="action"
+    >My Teams</a
+  >
   <a href="/logout" class="action">Logout</a>`;
 
 const templGuestNav = html` <a href="/login" class="action">Login</a>
