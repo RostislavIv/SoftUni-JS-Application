@@ -17,6 +17,6 @@ export class NavComponent {
 
   async _logoutHendler() {
     await this.authService.logout();
-    this.router.navigate("/");
+    this.router.navigate("/dashboard");
   }
 }

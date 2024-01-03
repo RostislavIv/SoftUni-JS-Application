@@ -11,6 +11,16 @@ import { BaseCrudApiService } from "./services/BaseCrudApiService.js";
 import { SessionService } from "./services/SessionService.js";
 import { RegisterComponent } from "./components/register/register.js";
 import { registerTemplate } from "./components/register/registerTemplate.js";
+import { DashboardComponent } from "./components/dashboard/dashboard.js";
+import { dashboardTemplate } from "./components/dashboard/dashboardTemplate.js";
+import { CreateComponent } from "./components/create/create.js";
+import { createTemplate } from "./components/create/createTemplate.js";
+import { DetailsComponent } from "./components/details/details.js";
+import { detailsTemplate } from "./components/details/detailsTemplate.js";
+import { EditComponent } from "./components/edit/edit.js";
+import { editTemplate } from "./components/edit/editTemplate.js";
+import { SearchComponent } from "./components/search/search.js";
+import { searchTemplate } from "./components/search/searchTemplate.js";
 
 const main = document.querySelector("main");
 const nav = document.querySelector("header");
@@ -24,7 +34,7 @@ const router = {
   redirect: page.redirect,
 };
 
-//Render hendlers
+//Render handlers
 const renderBody = (template) => render(template, main);
 const renderNav = (template) => render(template, nav);
 
@@ -53,6 +63,35 @@ const registerComponent = new RegisterComponent(
   registerTemplate,
   router
 );
+const dashboardComponent = new DashboardComponent(
+  shoesService,
+  renderBody,
+  dashboardTemplate
+);
+const createComponent = new CreateComponent(
+  shoesService,
+  renderBody,
+  createTemplate,
+  router
+);
+const detailComponent = new DetailsComponent(
+  shoesService,
+  renderBody,
+  detailsTemplate,
+  router
+);
+const editComponent = new EditComponent(
+  shoesService,
+  renderBody,
+  editTemplate,
+  router
+);
+const searchComponent = new SearchComponent(
+  shoesService,
+  renderBody,
+  searchTemplate,
+  router
+);
 
 //Roting
 page("/index.html", "/");
@@ -60,4 +99,9 @@ page(navComponent.showView);
 page("/", homeComponent.showView);
 page("/login", loginComponent.showView);
 page("/register", registerComponent.showView);
+page("/dashboard", dashboardComponent.showView);
+page("/create", createComponent.showView);
+page("/details/:id", detailComponent.showView);
+page("/edit/:id", editComponent.showView);
+page("/search", searchComponent.showView);
 page.start();

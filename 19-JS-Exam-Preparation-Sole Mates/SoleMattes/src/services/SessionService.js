@@ -2,14 +2,20 @@ const key = "accessToken";
 
 export class SessionService {
   getAccessToken() {
-    return sessionStorage.getItem(key);
+    return sessionStorage.getItem("accessToken");
   }
 
-  setAccessToken(accessToken) {
-    sessionStorage.setItem(key, accessToken);
+  getUserId() {
+    return sessionStorage.getItem("_id");
+  }
+
+  setAccessToken(accessToken, _id) {
+    sessionStorage.setItem("accessToken", accessToken);
+    sessionStorage.setItem("_id", _id);
   }
 
   removeAccessToken() {
-    sessionStorage.removeItem(key);
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("_id");
   }
 }

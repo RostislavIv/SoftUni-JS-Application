@@ -28,7 +28,7 @@ export class LoginComponent {
     const user = { email, password };
     try {
       await this.authService.login(user);
-      this.router.navigate("/");
+      this.router.navigate("/dashboard");
     } catch (err) {
       if (err instanceof UserReadableError) {
         alert(err.message);

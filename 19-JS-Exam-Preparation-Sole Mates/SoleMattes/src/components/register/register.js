@@ -29,7 +29,7 @@ export class RegisterComponent {
     const user = { email, password };
     try {
       await this.authService.register(user);
-      this.router.navigate("/");
+      this.router.navigate("/dashboard");
     } catch (err) {
       if (err instanceof UserReadableError) {
         alert(err.message);

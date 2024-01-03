@@ -8,7 +8,7 @@ export class BaseCrudApiService extends BaseApyServices {
   }
 
   async getAll() {
-    const url = this.resourceUrl;
+    const url = `${this.resourceUrl}?sortBy=_createdOn%20desc`;
     const settings = { method: "GET" };
     const result = await this._internalFetchJson(url, settings);
     return result;
@@ -16,6 +16,13 @@ export class BaseCrudApiService extends BaseApyServices {
 
   async getById(id) {
     const url = `${this.resourceUrl}/${id}`;
+    const settings = { method: "GET" };
+    const result = await this._internalFetchJson(url, settings);
+    return result;
+  }
+
+  async getByBrand(brand) {
+    const url = `${this.resourceUrl}?where=brand%20LIKE%20%22${brand}%22`;
     const settings = { method: "GET" };
     const result = await this._internalFetchJson(url, settings);
     return result;
@@ -59,5 +66,9 @@ export class BaseCrudApiService extends BaseApyServices {
     };
     const result = await this._internalFetchJson(url, settings);
     return result;
+  }
+
+  getUserId() {
+    return this.sessionService.getUserId();
   }
 }

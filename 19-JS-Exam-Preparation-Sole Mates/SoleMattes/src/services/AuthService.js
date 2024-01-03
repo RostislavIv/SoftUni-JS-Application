@@ -15,7 +15,7 @@ export class AuthService extends BaseApyServices {
       body: JSON.stringify(user),
     };
     const result = await this._internalFetchJson(url, settings);
-    this.sessionService.setAccessToken(result.accessToken);
+    this.sessionService.setAccessToken(result.accessToken, result._id);
     return result;
   }
 
@@ -27,7 +27,7 @@ export class AuthService extends BaseApyServices {
       body: JSON.stringify(user),
     };
     const result = await this._internalFetchJson(url, settings);
-    this.sessionService.setAccessToken(result.accessToken);
+    this.sessionService.setAccessToken(result.accessToken, result._id);
     return result;
   }
 

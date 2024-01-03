@@ -13,7 +13,7 @@ export const navTemplate = (isLog, logoutHenler) => html` <a id="logo" href="/"
   </nav>`;
 
 const navUserTemplate = (logoutHenler) => html` <div class="user">
-  <a href="/logout">Add Pair</a>
+  <a href="/create">Add Pair</a>
   <a href="javascript:void(0)" @click=${logoutHenler}>Logout</a>
 </div>`;
 
