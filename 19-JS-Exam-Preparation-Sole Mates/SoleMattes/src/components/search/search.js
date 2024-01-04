@@ -8,27 +8,30 @@ export class SearchComponent {
     this.searchHendler = this._searchHendler.bind(this);
   }
 
-  _showView() {
-    const searchShoes = undefined;
-    const template = this.templateFunction(this.searchHendler, searchShoes);
-    this.renderHandler(template);
-  }
-
-  async _searchHendler(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const searchBrand = formData.get("search");
-    if (!searchBrand) {
-      return;
-    }
+  async _showView(ctx) {
+    const query = ctx.querystring;
+    const searchBrand = query.split("=")[1];
+    const searchShoes = searchBrand
+      ? await this.shoesService.getByBrand(searchBrand)
+      : undefined;
     const isLog = this.shoesService.getUserId() ? true : false;
-    const searchShoes = await this.shoesService.getByBrand(searchBrand);
     const template = this.templateFunction(
       this.searchHendler,
       searchShoes,
       isLog
     );
     this.renderHandler(template);
+  }
+
+  _searchHendler(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const searchBrand = formData.get("search");
+    if (!searchBrand) {
+      alert("field is empty");
+      return;
+    }
+    this.router.navigate(`/search?brand=${searchBrand}`);
   }
 }

@@ -13,7 +13,7 @@ export const detailsTemplate = (shoe, isOwner, deleteHandler) => html` <section
       <p>Model: <span id="details-model">${shoe.model}</span></p>
       <p>Release date: <span id="details-release">${shoe.release}</span></p>
       <p>Designer: <span id="details-designer">${shoe.designer}</span></p>
-      <p>Value: <span id="details-value"></span>${shoe.value}</p>
+      <p>Value: <span id="details-value">${shoe.value}</span></p>
     </div>
 
     <!--Edit and Delete are only for creator-->
