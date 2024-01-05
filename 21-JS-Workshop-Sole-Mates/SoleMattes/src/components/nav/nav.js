@@ -1,49 +1,49 @@
-import { LitElement, html } from "lit";
+import { LitElement, css, html } from "lit";
 
 class NavComponent extends LitElement {
-  static styles = css`
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.3em 3em;
-      background: #7d7e7e;
-    }
+  // static styles = css`
+  //   .header-container {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     align-items: center;
+  //     padding: 0.3em 3em;
+  //     background: #7d7e7e;
+  //   }
 
-    nav {
-      background-color: #7a6e6e;
-      height: 0px;
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: space-between;
-      color: aliceblue;
-    }
+  //   nav {
+  //     background-color: #7a6e6e;
+  //     height: 0px;
+  //     margin-bottom: 15px;
+  //     display: flex;
+  //     justify-content: space-between;
+  //     color: aliceblue;
+  //   }
 
-    #logo {
-      font-style: italic;
-      font-size: 30px;
-    }
+  //   #logo {
+  //     font-style: italic;
+  //     font-size: 30px;
+  //   }
 
-    #logo-img {
-      height: 70px;
-    }
+  //   #logo-img {
+  //     height: 70px;
+  //   }
 
-    nav a {
-      font-size: 1.5rem;
-      color: #0a0a0a;
-      font-weight: 400;
-    }
+  //   nav a {
+  //     font-size: 1.5rem;
+  //     color: #0a0a0a;
+  //     font-weight: 400;
+  //   }
 
-    header a {
-      padding: 0 10px;
-      text-decoration: none;
-      color: aliceblue;
-    }
+  //   header a {
+  //     padding: 0 10px;
+  //     text-decoration: none;
+  //     color: aliceblue;
+  //   }
 
-    header a:hover {
-      color: rgb(202, 203, 204);
-    }
-  `;
+  //   header a:hover {
+  //     color: rgb(202, 203, 204);
+  //   }
+  // `;
 
   static properties = {
     authService: { type: Object },
@@ -97,27 +97,4 @@ class NavComponent extends LitElement {
 }
 
 //Initialize "nav-comp"
-customElements.define("nav-comp", NavComponent);
-
-// export class NavComponent {
-//   constructor(authService, renderHendler, templateFunction, router) {
-//     this.authService = authService;
-//     this.renderHendler = renderHendler;
-//     this.templateFunction = templateFunction;
-//     this.router = router;
-//     this.showView = this._showView.bind(this);
-//     this.logoutHendler = this._logoutHendler.bind(this);
-//   }
-
-//   _showView(ctx, next) {
-//     const isLog = this.authService.isLog();
-//     const template = this.templateFunction(isLog, this.logoutHendler);
-//     this.renderHendler(template);
-//     next();
-//   }
-
-//   async _logoutHendler() {
-//     await this.authService.logout();
-//     this.router.navigate("/dashboard");
-//   }
-// }
+customElements.define("nav-component", NavComponent);
