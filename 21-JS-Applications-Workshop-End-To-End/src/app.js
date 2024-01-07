@@ -11,6 +11,9 @@ import { LoginComponent } from "./components/login/logincomponent.js";
 import { loginTemplate } from "./components/login/loginTemplate.js";
 import { RegisterComponent } from "./components/register/registerComponent.js";
 import { registerTemplate } from "./components/register/registerTemplate.js";
+import { createDatabase } from "./createDatabase.js";
+
+//await createDatabase();
 
 //Services
 const authService = new AuthService();
@@ -52,8 +55,6 @@ const registerComponent = new RegisterComponent(
   registerTemplate,
   router
 );
-
-debugger;
 
 page("/index.html", "/");
 page(navComponent.show);

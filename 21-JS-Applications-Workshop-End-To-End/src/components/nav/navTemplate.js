@@ -10,7 +10,7 @@ export const navTemplate = (isLog, logoutHandler) => html` <nav>
     ${isLog
       ? html` <div id="user-nav" style="display:block">
           <a class="nav-link" href="/create">Create</a>
-          <a class="nav-link profile-link" href="#"
+          <a class="nav-link profile-link" href="/profile"
             ><i class="fas fa-user-circle"></i
           ></a>
           <a
