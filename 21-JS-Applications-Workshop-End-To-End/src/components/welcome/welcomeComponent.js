@@ -6,21 +6,20 @@ export class WelcomeComponent {
     this.show = this._show.bind(this);
   }
 
-  _show() {
-    const quizes = 10;
-    const topics = 15;
-    const mostRecentQuiz = {
-      title: "myTitle",
-      topic: "mytopic",
-      questionCount: "10",
-    };
-    const takenTimes = 10;
+  async _show(ctx) {
+    const quizzes = await this.quizzesService.getAllQuizzes();
+    const quizzesCount = quizzes.length;
+    const topics = [...new Set(quizzes.map((q) => q.topic))];
+    const topicsCount = topics.length;
+    const mostRecentQuiz = quizzes.sort(
+      (a, b) => b.statistic.taken - a.statistic.taken
+    )[0];
     const template = this.welcomeTemplate(
-      quizes,
-      topics,
-      mostRecentQuiz,
-      takenTimes
+      quizzesCount,
+      topicsCount,
+      mostRecentQuiz
     );
+    ctx.params.quizzes = quizzes;
     this.mainRender(template);
   }
 }

@@ -12,6 +12,8 @@ import { loginTemplate } from "./components/login/loginTemplate.js";
 import { RegisterComponent } from "./components/register/registerComponent.js";
 import { registerTemplate } from "./components/register/registerTemplate.js";
 import { createDatabase } from "./createDatabase.js";
+import { BrowserComponent } from "./components/browser/browserComponent.js";
+import { browserTemplate } from "./components/browser/browsertemplate.js";
 
 //await createDatabase();
 
@@ -43,6 +45,12 @@ const welcomeComponent = new WelcomeComponent(
   mainRender,
   welcomeTemplate
 );
+const browserComponent = new BrowserComponent(
+  quizzesService,
+  mainRender,
+  browserTemplate,
+  router
+);
 const loginComponent = new LoginComponent(
   authService,
   mainRender,
@@ -59,12 +67,16 @@ const registerComponent = new RegisterComponent(
 page("/index.html", "/");
 page(navComponent.show);
 page("/", welcomeComponent.show);
+page("/browser", browserComponent.show);
 page("/login", loginComponent.show);
 page("/register", registerComponent.show);
 page.start();
 
+//debugger;
+//const quizzes = await quizzesService.getAll();
+
 //await authService.login({ username: "Peter", password: "123456" });
-console.log(authService.isLog());
+//console.log(authService.isLog());
 // await authService.register({
 //   username: "Rosti4",
 //   email: "rosti4@abv.bg",

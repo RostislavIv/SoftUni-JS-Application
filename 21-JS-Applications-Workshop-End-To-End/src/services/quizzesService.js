@@ -1,4 +1,19 @@
 export class QuizzesService {
+  async getAllQuizzes() {
+    const query = new Parse.Query("quizzes");
+    const results = await query.find();
+    try {
+      const quizzes = [];
+      for (const object of results) {
+        const quiz = object.get("quiz");
+        quizzes.push(quiz);
+      }
+      return quizzes;
+    } catch (error) {
+      console.error("Error while fetching MyCustomClassName", error);
+    }
+  }
+
   // async getAll() {
   //   const url = this.url.getAll;
   //   const settings = {

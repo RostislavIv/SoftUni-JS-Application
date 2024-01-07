@@ -6,7 +6,7 @@ export const navTemplate = (isLog, logoutHandler) => html` <nav>
     ><i class="merge fas fa-check-circle"></i><span>Quiz Fever</span></a
   >
   <div class="navigation">
-    <a class="nav-link" href="/browse">Browse</a>
+    <a class="nav-link" href="/browser">Browse</a>
     ${isLog
       ? html` <div id="user-nav" style="display:block">
           <a class="nav-link" href="/create">Create</a>
