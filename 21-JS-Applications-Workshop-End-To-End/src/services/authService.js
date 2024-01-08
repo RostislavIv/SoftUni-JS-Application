@@ -18,6 +18,7 @@ export class AuthService {
     user.set("email", email);
     user.set("password", password);
     user.set("confirmPassword", repass);
+    user.set("results", { cxs1NuvBk4: 10 });
 
     try {
       let userResult = await user.signUp();

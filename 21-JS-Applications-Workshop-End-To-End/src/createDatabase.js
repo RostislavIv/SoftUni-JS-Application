@@ -1,6 +1,6 @@
 export async function createDatabase() {
   try {
-    let user = await Parse.User.logIn("peter@abv.bg", "123456");
+    const user = await Parse.User.logIn("peter@abv.bg", "123456");
     console.log("Logged in user", user);
   } catch (error) {
     alert(`Error while logging in user: ${error.message}`);
@@ -8,17 +8,15 @@ export async function createDatabase() {
   }
   const currentUser = Parse.User.current();
 
+  const acl = new Parse.ACL();
+  acl.setPublicReadAccess(true);
+  acl.setPublicWriteAccess(false);
+  if (currentUser) {
+    acl.setReadAccess(currentUser, true);
+    acl.setWriteAccess(currentUser, true);
+  }
+
   for (let i = 1; i <= 10; i++) {
-    const Descriptions = new Parse.Object("descriptions");
-    Descriptions.set("description", `description_${i}`);
-    const resultDes = await Descriptions.save();
-    const descriptionId = resultDes.id;
-
-    // const Statistics = new Parse.Object("statistics");
-    // Statistics.set("statistic", { taken: 0 });
-    // const resultStat = await Statistics.save();
-    // quiz.statisticId = resultStat.id;
-
     const questions = [];
     const Questions = new Parse.Object("questions");
     for (let j = 1; j <= 20; j++) {
@@ -33,25 +31,21 @@ export async function createDatabase() {
       }
       questions.push(question);
     }
-    Questions.addAll("questions", questions);
-    const resulQuest = await Questions.save();
-    const questionId = resulQuest.id;
+    Questions.setACL(acl);
+    Questions.set("owner", currentUser);
+    Questions.set("questions", questions);
+    const resultQuestions = await Questions.save();
+    const questionsCount = resultQuestions.get("questions").length;
 
     const Quizzes = new Parse.Object("quizzes");
-    const quiz = {
-      owner: currentUser.id,
-      title: `title_${i}`,
-      topic: `topic_${i}`,
-      descriptionId: descriptionId,
-      statistic: { taken: 0, questionsCount: questions.length },
-      questionId: questionId,
-    };
-    Quizzes.set("quiz", quiz);
-    // Quizzes.set("title", `title_${i}`);
-    // Quizzes.set("topic", `topic_${i}`);
-    // Quizzes.set("descriptionId", descriptionId);
-    // Quizzes.set("taken", 0);
-    // Quizzes.set("questionId", questionId);
+    Quizzes.setACL(acl);
+    Quizzes.set("owner", currentUser);
+    Quizzes.set("title", `title_${i}`);
+    Quizzes.set("topic", `topic_${i}`);
+    Quizzes.set("description", `description_${i}`);
+    Quizzes.set("taken", {});
+    Quizzes.set("questionsCount", questionsCount);
+    Quizzes.set("questions", Questions);
     await Quizzes.save();
   }
 }

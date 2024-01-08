@@ -14,12 +14,18 @@ import { registerTemplate } from "./components/register/registerTemplate.js";
 import { createDatabase } from "./createDatabase.js";
 import { BrowserComponent } from "./components/browser/browserComponent.js";
 import { browserTemplate } from "./components/browser/browsertemplate.js";
-
-//await createDatabase();
+import { DetailsComponent } from "./components/details/detailsComponent.js";
+import { detailsTemplate } from "./components/details/detailsTemplate.js";
+import { QuizComponent } from "./components/quiz/qiuzComponent.js";
+import { quizTemplate } from "./components/quiz/quizTemplate.js";
 
 //Services
 const authService = new AuthService();
 const quizzesService = new QuizzesService();
+
+debugger;
+//await createDatabase();
+const quizzes = await quizzesService.getQuizzes();
 
 //Renders
 const headerElem = document.querySelector("header");
@@ -63,6 +69,16 @@ const registerComponent = new RegisterComponent(
   registerTemplate,
   router
 );
+const detailsComponent = new DetailsComponent(
+  quizzesService,
+  mainRender,
+  detailsTemplate
+);
+const quizComponent = new QuizComponent(
+  quizzesService,
+  mainRender,
+  quizTemplate
+);
 
 page("/index.html", "/");
 page(navComponent.show);
@@ -70,10 +86,9 @@ page("/", welcomeComponent.show);
 page("/browser", browserComponent.show);
 page("/login", loginComponent.show);
 page("/register", registerComponent.show);
+page("/details/:id", detailsComponent.show);
+page("/quiz/:id", quizComponent.show);
 page.start();
-
-//debugger;
-//const quizzes = await quizzesService.getAll();
 
 //await authService.login({ username: "Peter", password: "123456" });
 //console.log(authService.isLog());

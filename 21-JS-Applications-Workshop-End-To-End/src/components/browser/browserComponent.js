@@ -10,7 +10,7 @@ export class BrowserComponent {
 
   async _show(ctx) {
     const query = ctx.querystring;
-    let quizzes = await this.quizzesService.getAllQuizzes();
+    let quizzes = await this.quizzesService.getQuizzes();
     const topics = [...new Set(quizzes.map((q) => q.topic))];
     const filterTopic = query.split("=")[1];
     if (filterTopic && filterTopic != "all") {
@@ -24,6 +24,7 @@ export class BrowserComponent {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
+    const query = formData.get("query");
     const topic = formData.get("topic");
     this.router.show(`/browser?topic=${topic}`);
   }

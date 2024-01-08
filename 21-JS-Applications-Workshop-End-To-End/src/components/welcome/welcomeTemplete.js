@@ -22,15 +22,15 @@ export const welcomeTemplate = (
 
     <article class="preview layout">
       <div class="right-col">
-        <a class="action cta" href="/details">View Quiz</a>
+        <a class="action cta" href="/details/${mostRecentQuiz.id}">View Quiz</a>
       </div>
       <div class="left-col">
         <h3>${mostRecentQuiz.title}</h3>
         <span class="quiz-topic">Topic: ${mostRecentQuiz.topic}</span>
         <div class="quiz-meta">
-          <span>${mostRecentQuiz.statistic.questionsCount} questions</span>
+          <span>${mostRecentQuiz.questionsCount} questions</span>
           <span>|</span>
-          <span>Taken ${mostRecentQuiz.statistic.taken} times</span>
+          <span>Taken ${mostRecentQuiz.taken} times</span>
         </div>
       </div>
     </article>

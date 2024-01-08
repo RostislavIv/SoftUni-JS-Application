@@ -35,17 +35,19 @@ export const browserTemplate = (
     ${quizzes.map(
       (quiz) => html` <article class="preview layout">
         <div class="right-col">
-          <a class="action cta" href="/details">View Quiz</a>
+          <a class="action cta" href="/details/${quiz.id}">View Quiz</a>
         </div>
         <div class="left-col">
           <h3>
-            <a class="quiz-title-link" href="/details">${quiz.title}</a>
+            <a class="quiz-title-link" href="/details/${quiz.id}"
+              >${quiz.title}</a
+            >
           </h3>
           <span class="quiz-topic">${quiz.topic}</span>
           <div class="quiz-meta">
-            <span>${quiz.statistic.questionsCount} questions</span>
+            <span>${quiz.questionsCount} questions</span>
             <span>|</span>
-            <span>Taken ${quiz.statistic.taken} times</span>
+            <span>Taken ${quiz.taken} times</span>
           </div>
         </div>
       </article>`
