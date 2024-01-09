@@ -1,30 +1,33 @@
 import { html } from "../../../node_modules/lit-html/lit-html.js";
 
-export const quizTemplate = (quiz, question, index, states) => html` <section
-  id="quiz"
->
+export const quizTemplate = (quiz, answerHandler) => html` <section id="quiz">
   <header class="pad-large">
-    <h1>${quiz.title}: Question ${index + 1} / ${quiz.questionsCount}</h1>
+    <h1>${quiz.title}: Question ${quiz.index + 1} / ${quiz.questionsCount}</h1>
     <nav class="layout q-control">
       <span class="block">Question index</span>
-      ${states.map(
+      ${quiz.states.map(
         (state, i) =>
           html`<a
-            class="q-index"
-            ${state}
-            href="/quiz/${quiz.questions.id}=${i}"
+            class="q-index ${state.questionIndex}"
+            href="/quiz/${quiz.id}=goTo=${i}"
           ></a>`
       )}
     </nav>
   </header>
   <div class="pad-large alt-page">
     <article class="question">
-      <p class="q-text">${question.question}</p>
+      <p class="q-text">${quiz.question}</p>
 
       <div>
-        ${question.answers.map(
-          (answer) => html`<label class="q-answer radio">
-            <input class="input" type="radio" name="question-1" value="0" />
+        ${quiz.answers.map(
+          (answer, i) => html`<label class="q-answer radio">
+            <input
+              class="input"
+              type="radio"
+              name="question-${quiz.index + 1}"
+              .value=${quiz.states[quiz.index].answer === i + 1 ? i + 1 : 0}
+              @change=${(e) => answerHandler(e, i + 1)}
+            />
             <i class="fas fa-check-circle"></i>
             ${answer}
           </label>`
@@ -32,18 +35,15 @@ export const quizTemplate = (quiz, question, index, states) => html` <section
       </div>
 
       <nav class="q-control">
-        <span class="block"
-          >${states.filter((s) => s === "q-answered").length} questions
-          remaining</span
-        >
-        <a class="action" href="/quiz/${quiz.id}=${Number(index) - 1}"
+        <span class="block">${quiz.remainQuestions} questions remaining</span>
+        <a class="action" href="/quiz/${quiz.id}=previous"
           ><i class="fas fa-arrow-left"></i> Previous</a
         >
         <a class="action" href="/quiz/${quiz.id}=start"
           ><i class="fas fa-sync-alt"></i> Start over</a
         >
         <div class="right-col">
-          <a class="action" href="/quiz/${quiz.id}=${Number(index) + 1}"
+          <a class="action" href="/quiz/${quiz.id}=next"
             >Next <i class="fas fa-arrow-right"></i
           ></a>
           <a class="action" href="/quiz/${quiz.id}=end">Submit answers</a>

@@ -79,8 +79,23 @@ export class QuizzesService {
     return result;
   }
 
+  async saveResultUser(result) {
+    const currentUser = Parse.User.current();
+    currentUser.add("results", result);
+    try {
+      const response = await currentUser.save();
+      console.log("save Result User response:", response);
+    } catch (error) {
+      console.error("Error while save Result User ", error);
+    }
+  }
+
   isLog() {
     return Parse.User.current() ? true : false;
+  }
+
+  getUser() {
+    return Parse.User.current();
   }
 }
 

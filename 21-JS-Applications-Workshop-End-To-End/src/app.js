@@ -23,7 +23,6 @@ import { quizTemplate } from "./components/quiz/quizTemplate.js";
 const authService = new AuthService();
 const quizzesService = new QuizzesService();
 
-debugger;
 //await createDatabase();
 const quizzes = await quizzesService.getQuizzes();
 
@@ -77,7 +76,8 @@ const detailsComponent = new DetailsComponent(
 const quizComponent = new QuizComponent(
   quizzesService,
   mainRender,
-  quizTemplate
+  quizTemplate,
+  router
 );
 
 page("/index.html", "/");
